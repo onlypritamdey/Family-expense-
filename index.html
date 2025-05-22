@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth" >
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -7,201 +7,279 @@
   <title>Family Expense Tracker</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 text-gray-800 font-sans">
+<body class="bg-gray-100 text-gray-900 font-sans min-h-screen flex flex-col">
 
-  <header class="bg-green-600 text-white py-4 text-center shadow-md">
-    <h1 class="text-xl font-bold">Family Expense Tracker</h1>
+  <header class="bg-green-600 text-white p-4 text-center font-bold text-xl">
+    Family Expense Tracker
   </header>
 
-  <main class="max-w-xl mx-auto mt-6 p-4 bg-white rounded-lg shadow">
+  <main class="max-w-lg w-full mx-auto p-4 bg-white rounded-lg shadow-md mt-4 mb-8 flex-grow">
     <form id="expense-form" class="space-y-4">
       <div>
-        <label for="item" class="block text-sm font-medium">Item Name</label>
-        <input type="text" id="item" required class="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-400" />
+        <label for="item" class="block mb-1 font-semibold">Item Name</label>
+        <input type="text" id="item" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500" required />
       </div>
       <div>
-        <label for="category" class="block text-sm font-medium">Category</label>
-        <select id="category" required class="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-400">
+        <label for="category" class="block mb-1 font-semibold">Category</label>
+        <select id="category" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500" required>
           <option value="">Select category</option>
           <option>Grocery</option>
           <option>Vegetables</option>
           <option>Others</option>
         </select>
       </div>
-      <div>
-        <label for="amount" class="block text-sm font-medium">Amount Spent ($)</label>
-        <input type="number" id="amount" min="0.01" step="0.01" required class="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-400" />
+
+      <!-- Quantity and Unit in one row -->
+      <div class="flex gap-4">
+        <div class="flex-1">
+          <label for="quantity" class="block mb-1 font-semibold">Quantity</label>
+          <input type="number" id="quantity" min="0.01" step="0.01" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500" required />
+        </div>
+        <div class="flex-1">
+          <label for="unit" class="block mb-1 font-semibold">Unit</label>
+          <select id="unit" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500" required>
+            <option value="">Select unit</option>
+            <option>kg</option>
+            <option>g</option>
+            <option>pieces</option>
+            <option>liters</option>
+          </select>
+        </div>
       </div>
+
       <div>
-        <label for="quantity" class="block text-sm font-medium">Quantity</label>
-        <input type="number" id="quantity" min="0.01" step="0.01" required class="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-400" />
+        <label for="amount" class="block mb-1 font-semibold">Amount Spent ($)</label>
+        <input type="number" id="amount" min="0.01" step="0.01" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500" required />
       </div>
+
       <div>
-        <label for="unit" class="block text-sm font-medium">Unit</label>
-        <select id="unit" required class="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-400">
-          <option value="">Select unit</option>
-          <option>kg</option>
-          <option>g</option>
-          <option>pieces</option>
-          <option>liters</option>
-        </select>
+        <label for="date" class="block mb-1 font-semibold">Date</label>
+        <input type="date" id="date" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500" required />
       </div>
-      <div>
-        <label for="date" class="block text-sm font-medium">Date</label>
-        <input type="date" id="date" required class="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-400" />
-      </div>
-      <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded text-lg font-semibold">Add Expense</button>
+
+      <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded font-semibold transition">Add Expense</button>
     </form>
 
     <section id="expenses-section" class="mt-8">
-      <h2 class="text-lg font-bold mb-2">Expenses</h2>
-      <div class="overflow-auto">
-        <table class="w-full text-sm border-collapse">
+      <h2 class="text-lg font-bold mb-3">Expenses</h2>
+      <div class="overflow-x-auto">
+        <table id="expenses-table" class="min-w-full border border-gray-300 rounded" aria-label="List of expenses">
           <thead class="bg-gray-200">
             <tr>
-              <th class="p-2 border">Item</th>
-              <th class="p-2 border">Category</th>
-              <th class="p-2 border">Amount ($)</th>
-              <th class="p-2 border">Qty</th>
-              <th class="p-2 border">Unit</th>
-              <th class="p-2 border">Unit Price</th>
-              <th class="p-2 border">Date</th>
-              <th class="p-2 border">Action</th>
+              <th class="border border-gray-300 px-2 py-1 text-left">Item</th>
+              <th class="border border-gray-300 px-2 py-1 text-left">Category</th>
+              <th class="border border-gray-300 px-2 py-1 text-right">Amount ($)</th>
+              <th class="border border-gray-300 px-2 py-1 text-right">Quantity</th>
+              <th class="border border-gray-300 px-2 py-1 text-left">Unit</th>
+              <th class="border border-gray-300 px-2 py-1 text-right">Unit Price ($)</th>
+              <th class="border border-gray-300 px-2 py-1 text-left">Date</th>
+              <th class="border border-gray-300 px-2 py-1 text-center">Action</th>
             </tr>
           </thead>
-          <tbody id="expenses-table-body"></tbody>
+          <tbody class="bg-white"></tbody>
         </table>
       </div>
     </section>
 
-    <section id="summary-section" class="mt-6">
-      <h3 class="text-lg font-semibold mb-2">Category-wise Summary</h3>
-      <ul id="summary-list" class="list-disc list-inside text-sm text-gray-700"></ul>
+    <section class="summary mt-8">
+      <h3 class="text-lg font-bold mb-2">Category-wise Summary</h3>
+      <div id="summary-tabs" class="flex flex-wrap gap-2 mb-4"></div>
+      <div id="tab-content" class="bg-gray-50 p-4 rounded min-h-[80px]">
+        <p class="text-gray-500">Select a category tab to view item-wise totals for this month.</p>
+      </div>
     </section>
   </main>
 
-  <footer class="text-center text-xs text-gray-500 mt-6 pb-4">
+  <footer class="text-center text-gray-600 text-sm p-4 border-t border-gray-300">
     &copy; 2025 Family Expense Tracker PWA
   </footer>
 
-  <script>
-    // Same JavaScript logic as before
-    function uuidv4() {
-      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
-        const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
-        return v.toString(16);
-      });
+<script>
+  // Utility to generate UUID (simple version)
+  function uuidv4() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+      const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+    });
+  }
+
+  const form = document.getElementById('expense-form');
+  const expensesTableBody = document.querySelector('#expenses-table tbody');
+  const summaryTabs = document.getElementById('summary-tabs');
+  const tabContent = document.getElementById('tab-content');
+  const dateInput = document.getElementById('date');
+  const categorySelect = form.category;
+
+  // Set default date to today
+  dateInput.valueAsDate = new Date();
+
+  // Load expenses from localStorage or empty array
+  let expenses = JSON.parse(localStorage.getItem('expenses')) || [];
+
+  // Load last selected category from localStorage
+  const savedCategory = localStorage.getItem('lastCategory');
+  if (savedCategory) {
+    categorySelect.value = savedCategory;
+  }
+
+  function saveExpenses() {
+    localStorage.setItem('expenses', JSON.stringify(expenses));
+  }
+
+  function calculateUnitPrice(amount, quantity) {
+    return quantity > 0 ? (amount / quantity) : 0;
+  }
+
+  function renderExpenses() {
+    expensesTableBody.innerHTML = '';
+    expenses.forEach(exp => {
+      const tr = document.createElement('tr');
+
+      tr.innerHTML = `
+        <td class="border border-gray-300 px-2 py-1">${exp.item}</td>
+        <td class="border border-gray-300 px-2 py-1">${exp.category}</td>
+        <td class="border border-gray-300 px-2 py-1 text-right">${exp.amount.toFixed(2)}</td>
+        <td class="border border-gray-300 px-2 py-1 text-right">${exp.quantity}</td>
+        <td class="border border-gray-300 px-2 py-1">${exp.unit}</td>
+        <td class="border border-gray-300 px-2 py-1 text-right font-semibold text-green-600">${exp.unitPrice.toFixed(2)}</td>
+        <td class="border border-gray-300 px-2 py-1">${exp.date}</td>
+        <td class="border border-gray-300 px-2 py-1 text-center">
+          <button class="delete-btn bg-red-600 hover:bg-red-700 text-white px-2 py-1 rounded" data-id="${exp.id}" aria-label="Delete expense for ${exp.item}">Delete</button>
+        </td>
+      `;
+
+      expensesTableBody.appendChild(tr);
+    });
+  }
+
+  function renderCategoryTabs() {
+    // Get unique categories from all expenses
+    const categories = [...new Set(expenses.map(e => e.category))];
+    summaryTabs.innerHTML = '';
+
+    if (categories.length === 0) {
+      summaryTabs.innerHTML = '<p class="text-gray-500">No categories available yet.</p>';
+      tabContent.innerHTML = '<p class="text-gray-500">Add expenses to see summary here.</p>';
+      return;
     }
 
-    const form = document.getElementById('expense-form');
-    const expensesTableBody = document.getElementById('expenses-table-body');
-    const summaryList = document.getElementById('summary-list');
-    const dateInput = document.getElementById('date');
+    categories.forEach((cat, i) => {
+      const btn = document.createElement('button');
+      btn.textContent = cat;
+      btn.className = "px-4 py-1 rounded focus:outline-none focus:ring-2 focus:ring-green-500 " + (i === 0 ? "bg-green-600 text-white" : "bg-green-200 text-green-800 hover:bg-green-300");
+      btn.setAttribute('data-cat', cat);
+      btn.addEventListener('click', () => {
+        // Remove active from all buttons
+        [...summaryTabs.children].forEach(b => {
+          b.classList.remove('bg-green-600', 'text-white');
+          b.classList.add('bg-green-200', 'text-green-800');
+        });
+        // Set active on clicked
+        btn.classList.add('bg-green-600', 'text-white');
+        btn.classList.remove('bg-green-200', 'text-green-800');
+        renderTabContent(cat);
+      });
+      summaryTabs.appendChild(btn);
+    });
 
+    // Automatically show first tab content
+    renderTabContent(categories[0]);
+  }
+
+  function renderTabContent(category) {
+    // Filter expenses for the category and current month (YYYY-MM)
+    const thisMonth = new Date().toISOString().slice(0, 7);
+    const filtered = expenses.filter(e => e.category === category && e.date.startsWith(thisMonth));
+
+    if (filtered.length === 0) {
+      tabContent.innerHTML = `<p class="text-gray-600">No expenses recorded for <strong>${category}</strong> this month.</p>`;
+      return;
+    }
+
+    // Sum amount per item
+    const summary = {};
+    filtered.forEach(e => {
+      summary[e.item] = (summary[e.item] || 0) + e.amount;
+    });
+
+    const listItems = Object.entries(summary)
+      .map(([item, total]) => `<li class="mb-1">${item}: <span class="font-semibold">$${total.toFixed(2)}</span></li>`)
+      .join('');
+
+    tabContent.innerHTML = `<ul>${listItems}</ul>`;
+  }
+
+  function addExpense(expense) {
+    expenses.push(expense);
+    saveExpenses();
+    renderExpenses();
+    renderCategoryTabs();
+  }
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+
+    const item = form.item.value.trim();
+    const category = form.category.value;
+    const amount = parseFloat(form.amount.value);
+    const quantity = parseFloat(form.quantity.value);
+    const unit = form.unit.value;
+    const date = form.date.value;
+
+    if (!item || !category || !amount || !quantity || !unit || !date) {
+      alert('Please fill all fields correctly.');
+      return;
+    }
+
+    const unitPrice = calculateUnitPrice(amount, quantity);
+
+    const expense = {
+      id: uuidv4(),
+      item,
+      category,
+      amount,
+      quantity,
+      unit,
+      date,
+      unitPrice
+    };
+
+    addExpense(expense);
+
+    // Remember last selected category
+    localStorage.setItem('lastCategory', category);
+
+    form.reset();
+
+    // Reset date to today
     dateInput.valueAsDate = new Date();
 
-    let expenses = JSON.parse(localStorage.getItem('expenses')) || [];
+    // Set category back to last selected
+    const savedCat = localStorage.getItem('lastCategory');
+    if (savedCat) form.category.value = savedCat;
+  });
 
-    function saveExpenses() {
-      localStorage.setItem('expenses', JSON.stringify(expenses));
-    }
-
-    function calculateUnitPrice(amount, quantity) {
-      return quantity > 0 ? amount / quantity : 0;
-    }
-
-    function renderExpenses() {
-      expensesTableBody.innerHTML = '';
-      expenses.forEach(exp => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td class="p-2 border">${exp.item}</td>
-          <td class="p-2 border">${exp.category}</td>
-          <td class="p-2 border">${exp.amount.toFixed(2)}</td>
-          <td class="p-2 border">${exp.quantity}</td>
-          <td class="p-2 border">${exp.unit}</td>
-          <td class="p-2 border text-green-600 font-semibold">${exp.unitPrice.toFixed(2)}</td>
-          <td class="p-2 border">${exp.date}</td>
-          <td class="p-2 border">
-            <button class="bg-red-500 text-white px-2 py-1 rounded text-xs" data-id="${exp.id}">Delete</button>
-          </td>
-        `;
-        expensesTableBody.appendChild(tr);
-      });
-    }
-
-    function renderSummary() {
-      const summary = {};
-      expenses.forEach(exp => {
-        if (!summary[exp.category]) summary[exp.category] = 0;
-        summary[exp.category] += exp.amount;
-      });
-
-      summaryList.innerHTML = '';
-      for (const [category, total] of Object.entries(summary)) {
-        const li = document.createElement('li');
-        li.textContent = `${category}: $${total.toFixed(2)}`;
-        summaryList.appendChild(li);
-      }
-    }
-
-    function addExpense(expense) {
-      expenses.push(expense);
+  expensesTableBody.addEventListener('click', e => {
+    if (e.target.classList.contains('delete-btn')) {
+      const id = e.target.getAttribute('data-id');
+      expenses = expenses.filter(exp => exp.id !== id);
       saveExpenses();
       renderExpenses();
-      renderSummary();
+      renderCategoryTabs();
     }
+  });
 
-    form.addEventListener('submit', e => {
-      e.preventDefault();
+  // Initial render
+  renderExpenses();
+  renderCategoryTabs();
 
-      const item = form.item.value.trim();
-      const category = form.category.value;
-      const amount = parseFloat(form.amount.value);
-      const quantity = parseFloat(form.quantity.value);
-      const unit = form.unit.value;
-      const date = form.date.value;
-
-      if (!item || !category || !amount || !quantity || !unit || !date) {
-        alert('Please fill all fields correctly.');
-        return;
-      }
-
-      const unitPrice = calculateUnitPrice(amount, quantity);
-      const expense = {
-        id: uuidv4(),
-        item,
-        category,
-        amount,
-        quantity,
-        unit,
-        date,
-        unitPrice
-      };
-
-      addExpense(expense);
-      form.reset();
-      dateInput.valueAsDate = new Date();
+  // Register service worker for offline support (optional)
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js').catch(err => {
+      console.warn('Service Worker registration failed:', err);
     });
+  }
+</script>
 
-    expensesTableBody.addEventListener('click', e => {
-      if (e.target.tagName === 'BUTTON') {
-        const id = e.target.dataset.id;
-        expenses = expenses.filter(exp => exp.id !== id);
-        saveExpenses();
-        renderExpenses();
-        renderSummary();
-      }
-    });
-
-    renderExpenses();
-    renderSummary();
-
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js').catch(err => {
-        console.warn('Service Worker registration failed:', err);
-      });
-    }
-  </script>
 </body>
 </html>
