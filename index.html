@@ -1,292 +1,207 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="theme-color" content="#4CAF50" />
-<title>Family Expense Tracker</title>
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    margin: 0; padding: 0;
-    background: #f5f5f5;
-    color: #333;
-  }
-  header {
-    background: #4CAF50;
-    color: white;
-    padding: 1rem;
-    text-align: center;
-  }
-  main {
-    max-width: 600px;
-    margin: 1rem auto;
-    background: white;
-    padding: 1rem;
-    border-radius: 8px;
-  }
-  form > div {
-    margin-bottom: 0.75rem;
-  }
-  label {
-    display: block;
-    margin-bottom: 0.25rem;
-  }
-  input, select {
-    width: 100%;
-    padding: 0.4rem;
-    font-size: 1rem;
-  }
-  button {
-    background: #4CAF50;
-    color: white;
-    border: none;
-    padding: 0.6rem 1.2rem;
-    font-size: 1rem;
-    cursor: pointer;
-    border-radius: 4px;
-  }
-  button:hover {
-    background: #45a049;
-  }
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 1rem;
-  }
-  th, td {
-    border: 1px solid #ddd;
-    padding: 0.5rem;
-    text-align: left;
-  }
-  th {
-    background: #f0f0f0;
-  }
-  .summary {
-    margin-top: 1rem;
-  }
-  .summary h3 {
-    margin-bottom: 0.5rem;
-  }
-  .unit-price {
-    font-weight: bold;
-    color: #4CAF50;
-  }
-  .delete-btn {
-    background: #e74c3c;
-    border: none;
-    color: white;
-    padding: 0.3rem 0.6rem;
-    cursor: pointer;
-    border-radius: 3px;
-  }
-  .delete-btn:hover {
-    background: #c0392b;
-  }
-  footer {
-    text-align: center;
-    padding: 1rem;
-    font-size: 0.9rem;
-    color: #777;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#4CAF50" />
+  <title>Family Expense Tracker</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-<header>
-  <h1>Family Expense Tracker</h1>
-</header>
-<main>
-  <form id="expense-form">
-    <div>
-      <label for="item">Item Name</label>
-      <input type="text" id="item" required />
-    </div>
-    <div>
-      <label for="category">Category</label>
-      <select id="category" required>
-        <option value="">Select category</option>
-        <option>Grocery</option>
-        <option>Vegetables</option>
-        <option>Others</option>
-      </select>
-    </div>
-    <div>
-      <label for="amount">Amount Spent ($)</label>
-      <input type="number" id="amount" min="0.01" step="0.01" required />
-    </div>
-    <div>
-      <label for="quantity">Quantity</label>
-      <input type="number" id="quantity" min="0.01" step="0.01" required />
-    </div>
-    <div>
-      <label for="unit">Unit</label>
-      <select id="unit" required>
-        <option value="">Select unit</option>
-        <option>kg</option>
-        <option>g</option>
-        <option>pieces</option>
-        <option>liters</option>
-      </select>
-    </div>
-    <div>
-      <label for="date">Date</label>
-      <input type="date" id="date" required />
-    </div>
-    <button type="submit">Add Expense</button>
-  </form>
+<body class="bg-gray-100 text-gray-800 font-sans">
 
-  <section id="expenses-section">
-    <h2>Expenses</h2>
-    <table id="expenses-table" aria-label="List of expenses">
-      <thead>
-        <tr>
-          <th>Item</th>
-          <th>Category</th>
-          <th>Amount ($)</th>
-          <th>Quantity</th>
-          <th>Unit</th>
-          <th>Unit Price ($)</th>
-          <th>Date</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-  </section>
+  <header class="bg-green-600 text-white py-4 text-center shadow-md">
+    <h1 class="text-xl font-bold">Family Expense Tracker</h1>
+  </header>
 
-  <section class="summary" id="summary-section">
-    <h3>Category-wise Summary</h3>
-    <ul id="summary-list"></ul>
-  </section>
-</main>
+  <main class="max-w-xl mx-auto mt-6 p-4 bg-white rounded-lg shadow">
+    <form id="expense-form" class="space-y-4">
+      <div>
+        <label for="item" class="block text-sm font-medium">Item Name</label>
+        <input type="text" id="item" required class="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-400" />
+      </div>
+      <div>
+        <label for="category" class="block text-sm font-medium">Category</label>
+        <select id="category" required class="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-400">
+          <option value="">Select category</option>
+          <option>Grocery</option>
+          <option>Vegetables</option>
+          <option>Others</option>
+        </select>
+      </div>
+      <div>
+        <label for="amount" class="block text-sm font-medium">Amount Spent ($)</label>
+        <input type="number" id="amount" min="0.01" step="0.01" required class="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-400" />
+      </div>
+      <div>
+        <label for="quantity" class="block text-sm font-medium">Quantity</label>
+        <input type="number" id="quantity" min="0.01" step="0.01" required class="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-400" />
+      </div>
+      <div>
+        <label for="unit" class="block text-sm font-medium">Unit</label>
+        <select id="unit" required class="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-400">
+          <option value="">Select unit</option>
+          <option>kg</option>
+          <option>g</option>
+          <option>pieces</option>
+          <option>liters</option>
+        </select>
+      </div>
+      <div>
+        <label for="date" class="block text-sm font-medium">Date</label>
+        <input type="date" id="date" required class="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-400" />
+      </div>
+      <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded text-lg font-semibold">Add Expense</button>
+    </form>
 
-<footer>
-  &copy; 2025 Family Expense Tracker PWA
-</footer>
+    <section id="expenses-section" class="mt-8">
+      <h2 class="text-lg font-bold mb-2">Expenses</h2>
+      <div class="overflow-auto">
+        <table class="w-full text-sm border-collapse">
+          <thead class="bg-gray-200">
+            <tr>
+              <th class="p-2 border">Item</th>
+              <th class="p-2 border">Category</th>
+              <th class="p-2 border">Amount ($)</th>
+              <th class="p-2 border">Qty</th>
+              <th class="p-2 border">Unit</th>
+              <th class="p-2 border">Unit Price</th>
+              <th class="p-2 border">Date</th>
+              <th class="p-2 border">Action</th>
+            </tr>
+          </thead>
+          <tbody id="expenses-table-body"></tbody>
+        </table>
+      </div>
+    </section>
 
-<script>
-  // Utility to generate UUID (simple version)
-  function uuidv4() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
-      const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
-      return v.toString(16);
-    });
-  }
+    <section id="summary-section" class="mt-6">
+      <h3 class="text-lg font-semibold mb-2">Category-wise Summary</h3>
+      <ul id="summary-list" class="list-disc list-inside text-sm text-gray-700"></ul>
+    </section>
+  </main>
 
-  const form = document.getElementById('expense-form');
-  const expensesTableBody = document.querySelector('#expenses-table tbody');
-  const summaryList = document.getElementById('summary-list');
-  const dateInput = document.getElementById('date');
+  <footer class="text-center text-xs text-gray-500 mt-6 pb-4">
+    &copy; 2025 Family Expense Tracker PWA
+  </footer>
 
-  // Set default date to today
-  dateInput.valueAsDate = new Date();
-
-  // Load expenses from localStorage or empty array
-  let expenses = JSON.parse(localStorage.getItem('expenses')) || [];
-
-  function saveExpenses() {
-    localStorage.setItem('expenses', JSON.stringify(expenses));
-  }
-
-  function calculateUnitPrice(amount, quantity) {
-    return quantity > 0 ? (amount / quantity) : 0;
-  }
-
-  function renderExpenses() {
-    expensesTableBody.innerHTML = '';
-    expenses.forEach(exp => {
-      const tr = document.createElement('tr');
-
-      tr.innerHTML = `
-        <td>${exp.item}</td>
-        <td>${exp.category}</td>
-        <td>${exp.amount.toFixed(2)}</td>
-        <td>${exp.quantity}</td>
-        <td>${exp.unit}</td>
-        <td class="unit-price">${exp.unitPrice.toFixed(2)}</td>
-        <td>${exp.date}</td>
-        <td><button class="delete-btn" data-id="${exp.id}" aria-label="Delete expense for ${exp.item}">Delete</button></td>
-      `;
-
-      expensesTableBody.appendChild(tr);
-    });
-  }
-
-  function renderSummary() {
-    const summary = {};
-    expenses.forEach(exp => {
-      if (!summary[exp.category]) summary[exp.category] = 0;
-      summary[exp.category] += exp.amount;
-    });
-
-    summaryList.innerHTML = '';
-    for (const [category, total] of Object.entries(summary)) {
-      const li = document.createElement('li');
-      li.textContent = `${category}: $${total.toFixed(2)}`;
-      summaryList.appendChild(li);
-    }
-  }
-
-  function addExpense(expense) {
-    expenses.push(expense);
-    saveExpenses();
-    renderExpenses();
-    renderSummary();
-  }
-
-  form.addEventListener('submit', e => {
-    e.preventDefault();
-
-    const item = form.item.value.trim();
-    const category = form.category.value;
-    const amount = parseFloat(form.amount.value);
-    const quantity = parseFloat(form.quantity.value);
-    const unit = form.unit.value;
-    const date = form.date.value;
-
-    if (!item || !category || !amount || !quantity || !unit || !date) {
-      alert('Please fill all fields correctly.');
-      return;
+  <script>
+    // Same JavaScript logic as before
+    function uuidv4() {
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+        const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+      });
     }
 
-    const unitPrice = calculateUnitPrice(amount, quantity);
+    const form = document.getElementById('expense-form');
+    const expensesTableBody = document.getElementById('expenses-table-body');
+    const summaryList = document.getElementById('summary-list');
+    const dateInput = document.getElementById('date');
 
-    const expense = {
-      id: uuidv4(),
-      item,
-      category,
-      amount,
-      quantity,
-      unit,
-      date,
-      unitPrice
-    };
-
-    addExpense(expense);
-    form.reset();
     dateInput.valueAsDate = new Date();
-  });
 
-  expensesTableBody.addEventListener('click', e => {
-    if (e.target.classList.contains('delete-btn')) {
-      const id = e.target.getAttribute('data-id');
-      expenses = expenses.filter(exp => exp.id !== id);
+    let expenses = JSON.parse(localStorage.getItem('expenses')) || [];
+
+    function saveExpenses() {
+      localStorage.setItem('expenses', JSON.stringify(expenses));
+    }
+
+    function calculateUnitPrice(amount, quantity) {
+      return quantity > 0 ? amount / quantity : 0;
+    }
+
+    function renderExpenses() {
+      expensesTableBody.innerHTML = '';
+      expenses.forEach(exp => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td class="p-2 border">${exp.item}</td>
+          <td class="p-2 border">${exp.category}</td>
+          <td class="p-2 border">${exp.amount.toFixed(2)}</td>
+          <td class="p-2 border">${exp.quantity}</td>
+          <td class="p-2 border">${exp.unit}</td>
+          <td class="p-2 border text-green-600 font-semibold">${exp.unitPrice.toFixed(2)}</td>
+          <td class="p-2 border">${exp.date}</td>
+          <td class="p-2 border">
+            <button class="bg-red-500 text-white px-2 py-1 rounded text-xs" data-id="${exp.id}">Delete</button>
+          </td>
+        `;
+        expensesTableBody.appendChild(tr);
+      });
+    }
+
+    function renderSummary() {
+      const summary = {};
+      expenses.forEach(exp => {
+        if (!summary[exp.category]) summary[exp.category] = 0;
+        summary[exp.category] += exp.amount;
+      });
+
+      summaryList.innerHTML = '';
+      for (const [category, total] of Object.entries(summary)) {
+        const li = document.createElement('li');
+        li.textContent = `${category}: $${total.toFixed(2)}`;
+        summaryList.appendChild(li);
+      }
+    }
+
+    function addExpense(expense) {
+      expenses.push(expense);
       saveExpenses();
       renderExpenses();
       renderSummary();
     }
-  });
 
-  // Initial render
-  renderExpenses();
-  renderSummary();
+    form.addEventListener('submit', e => {
+      e.preventDefault();
 
-  // Register service worker for offline support
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js').catch(err => {
-      console.warn('Service Worker registration failed:', err);
+      const item = form.item.value.trim();
+      const category = form.category.value;
+      const amount = parseFloat(form.amount.value);
+      const quantity = parseFloat(form.quantity.value);
+      const unit = form.unit.value;
+      const date = form.date.value;
+
+      if (!item || !category || !amount || !quantity || !unit || !date) {
+        alert('Please fill all fields correctly.');
+        return;
+      }
+
+      const unitPrice = calculateUnitPrice(amount, quantity);
+      const expense = {
+        id: uuidv4(),
+        item,
+        category,
+        amount,
+        quantity,
+        unit,
+        date,
+        unitPrice
+      };
+
+      addExpense(expense);
+      form.reset();
+      dateInput.valueAsDate = new Date();
     });
-  }
-</script>
+
+    expensesTableBody.addEventListener('click', e => {
+      if (e.target.tagName === 'BUTTON') {
+        const id = e.target.dataset.id;
+        expenses = expenses.filter(exp => exp.id !== id);
+        saveExpenses();
+        renderExpenses();
+        renderSummary();
+      }
+    });
+
+    renderExpenses();
+    renderSummary();
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js').catch(err => {
+        console.warn('Service Worker registration failed:', err);
+      });
+    }
+  </script>
 </body>
 </html>
